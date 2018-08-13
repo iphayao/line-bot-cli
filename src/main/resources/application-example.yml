@@ -1,0 +1,3 @@
+line.bot:
+  channel-token: 'your token'
+  channel-secret: 'your secret'
