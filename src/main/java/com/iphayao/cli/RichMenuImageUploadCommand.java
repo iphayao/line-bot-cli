@@ -1,10 +1,9 @@
-package com.iphayao.cli.arguments;
+package com.iphayao.cli;
 
-import com.iphayao.cli.CliCommand;
+import com.iphayao.cli.arguments.Arguments;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.response.BotApiResponse;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -27,15 +26,16 @@ public class RichMenuImageUploadCommand implements CliCommand {
 
     @Override
     public void execute() throws Exception {
-        final String richMenuId = checkNotNull(arguments.getRichMenuId(), "--rich-menu-id= is not set.");
-        final String image = checkNotNull(arguments.getImage(), "--image= is not set.");
-        final String contentType = checkNotNull(getDefaultFileTypeMap().getContentType(image), "Can't assume Content-Type");
+        final String richMenuId = checkNotNull(arguments.getRichMenuId(), "--richmenu-id= is not set");
+        final String image = checkNotNull(arguments.getImage(), "--image= is not set");
+        final String contentType = checkNotNull(getDefaultFileTypeMap().getContentType(image), "Can't assume content type");
 
         log.info("Content-Type: {}", contentType);
 
         byte[] bytes = Files.readAllBytes(Paths.get(image));
-
         final BotApiResponse botApiResponse = getUnchecked(lineMessagingClient.setRichMenuImage(richMenuId, contentType, bytes));
-        log.info("Request Successfully finished {}", botApiResponse);
+
+        log.info("Successfully finished.");
+        log.info("response: {}", botApiResponse);
     }
 }

@@ -35,9 +35,9 @@ public class Application {
             return;
         }
 
-        /*if(commandMap.size() > 1) {
+        if(commandMap.size() > 1) {
             throw new RuntimeException("Multiple commands matched, maybe bug");
-        }*/
+        }
 
         CliCommand command = commandMap.values().iterator().next();
 
@@ -47,6 +47,16 @@ public class Application {
     }
 
     private void printSupportCommand() {
-
+        for(Class<?> clazz: new Class<?>[] {
+                RichMenuCreateCommand.class,
+                RichMenuGetCommand.class,
+                RichMenuListCommand.class,
+                RichMenuDeleteCommand.class,
+                RichMenuImageUploadCommand.class,
+                RichMenuImageDownloadCommand.class,
+                RichMenuLinkRichMenuIdToUserCommand.class,
+                RichMenuUnlinkRichMenuIdFromUserCommand.class,
+                RichMenuGetRichMenuIdOfUserCommand.class
+        });
     }
 }

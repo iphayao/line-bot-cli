@@ -14,21 +14,20 @@ import static com.google.common.util.concurrent.Futures.getUnchecked;
 
 @Slf4j
 @Component
-@ConditionalOnProperty(name = "command", havingValue = "richmenu-link")
+@ConditionalOnProperty(name = "command", havingValue = "richmenu-delete")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class RichMenuLinkRichMenuIdToUserCommand implements CliCommand {
+public class RichMenuDeleteCommand implements CliCommand {
     private LineMessagingClient lineMessagingClient;
     private Arguments arguments;
 
     @Override
     public void execute() throws Exception {
-        final String userId = checkNotNull(arguments.getUserId(), "--user-id= is not set.");
-        final String richMenuId = checkNotNull(arguments.getRichMenuId(), "--rich-menu-id= is not set.");
+        final String richMenuId = checkNotNull(arguments.getRichMenuId(), "--richmenu-id= is not set.");
 
-        final BotApiResponse botApiResponse = getUnchecked(lineMessagingClient.linkRichMenuIdToUser(userId, richMenuId));
+        final BotApiResponse botApiResponse = getUnchecked(lineMessagingClient.deleteRichMenu(richMenuId));
 
         log.info("Successfully finished");
-        log.info("response = {}", botApiResponse);
+        log.info("response: {}", botApiResponse);
 
     }
 }
